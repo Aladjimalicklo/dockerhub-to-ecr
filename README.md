@@ -23,59 +23,10 @@ Ce script **automatise la migration** de vos images Docker hébergées sur [Dock
 
 ---
 
-## 📝 Exemple d’utilisation
-
-
-### 1. Cloner le repo
-
-```bash
-git clone https://github.com/votre-utilisateur/migrate-docker-to-ecr.git
-cd migrate-docker-to-
-```
-### 2. Modifier les variables dans le script
-  Ouvrez migrate-to-ecr.sh et modifiez :
-  
-  REGION : votre région AWS (ex: eu-west-1)
-  
-  DOCKERHUB_USER : votre nom Docker Hub
-  
-  APPS : les noms de vos images Docker
-
-### 3. Lancer le script
-
-```bash
-chmod +x migrate-to-ecr.sh
-./migrate-to-ecr.sh
-```
----
-
-## 📁 Structure du script
-
-```bash
-REGION="eu-west-1"               # Région AWS
-ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
-
-APPS=("inventory-app" "billing-app" "api-gateway")
-DOCKERHUB_USER="malickfama"
-
-# Connexion à ECR
-aws ecr get-login-password --region $REGION | \
-  docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
-
-# Boucle sur chaque app
-for APP in "${APPS[@]}"; do
-  docker pull $DOCKERHUB_USER/$APP:latest
-  docker tag $DOCKERHUB_USER/$APP:latest $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$APP:latest
-  docker push $ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$APP:latest
-done
-
-
----
-
-## 📋 Pré-requis
+## ✅📋 Pré-requis
 
 - [x] AWS CLI installé et configuré (`aws configure`)
-- [x] Docker installé et fonctionnel (`docker version`)
+- [x] Docker et Docker Desktop installés et fonctionnelles (`docker version`)
 - [x] Un compte AWS avec les permissions ECR :
   - `ecr:CreateRepository`
   - `ecr:GetAuthorizationToken`
@@ -100,6 +51,30 @@ done
   ]
 }
 ```
+## 📝 Exemple d’utilisation
+
+
+### 1. Cloner le repo
+
+```bash
+git clone https://github.com/Aladjimalicklo/dockerhub-to-ecr.git
+```
+### 2. Modifier les variables dans le script
+  Ouvrez migrate-to-ecr.sh et modifiez :
+  
+  REGION : votre région AWS (ex: eu-west-1)
+  
+  DOCKERHUB_USER : votre nom Docker Hub
+  
+  APPS : les noms de vos images Docker
+
+### 3. Lancer le script
+
+```bash
+chmod +x migrate-to-ecr.sh
+./migrate-to-ecr.sh
+```
+---
 
 ---
 
@@ -113,10 +88,16 @@ done
 
 ## 👨‍💻 Auteur
 
-**Malick Fama**  
-🎓 Ingénieur DevOps & Cloud  
+**ALADJI MALICK LO**  
+🚀 **Junior DevOps & Cloud Engineer** en pleine ascension  
+🎓 📚 **Spécialisation** :  
+  - DevOps (Docker, Kubernetes, CI/CD)  
+  - Cloud AWS  
+  - Infrastructure as Code (Terraform)  
+  - Automatisation 
+ 
 🌍 Dakar, Sénégal  
-🔗 [LinkedIn](https://www.linkedin.com/in/malickfama)  
+🔗 [LinkedIn](http://linkedin.com/in/aladji-malick-lo-b1a048203)  
 🐙 GitHub : [@Aladjimalicklo](https://github.com/Aladjimalicklo)
 
 ---
